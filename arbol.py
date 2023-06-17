@@ -52,7 +52,7 @@ class Arbol:
         parent_Nodo.add_children(new_Nodo)
         self.peso+=1
       else:
-        raise 'No se ha encontrado el Nodo padre'
+        raise ValueError('No se ha encontrado el Nodo padre')
     
   def get_altura(self)->int:
     """Método que retorna la altura del árbol
@@ -82,7 +82,7 @@ class Arbol:
     """
     return self.peso
   
-  def get_arbol(self, nodo_actual=None,nivel=0):
+  def get_arbol(self,nodo_actual=None,nivel=0)->None:
     if not nodo_actual:
       nodo_actual = self.root
     if nivel > 0:
@@ -90,31 +90,49 @@ class Arbol:
     for hijo in nodo_actual.children:
       self.get_arbol(hijo,nivel+1)
   
-    
 if __name__=='__main__':
   ##some class test
-  a=Arbol()
-  a.add(20)
-  print(a.root.element)
-  a.add(30,20)
-  a.add(10,20)
-  print(f'La altura del árbol es : {a.get_altura()}')
-  print(f'El peso del arbol es :{a.get_height()}')
-  a.add(9,20)
-  a.add(322,20)
-  a.add(40,30)
-  a.add(44000,40)
-  a.add(312,10)
-  a.add(232,9)
-  a.add(69,322)
-  hijo=a.root.children
-  print(f'los hijos de la raiz {a.root.element} del arbol son :')
-  for ele in hijo:
-    print(ele.element,end=' ')
-  print(f'La altura del árbol es : {a.get_altura()}')
-  print(f'El peso del arbol es :{a.get_height()}')
-  print('XDDDDD')
-  print(a.root.element)
-  a.get_arbol(a.root)
   ##Programa principal
-  
+  arbol=Arbol()
+  def seguir()->bool:
+    print('\n Desea realizar otra operación ? \n 1->Si \n 2->No')
+    opc=int(input('-> '))
+    if opc==1:
+      print('\n')
+      return False
+    else:
+      print('El arbol registrado fue : ')
+      print(arbol.root.element)
+      arbol.get_arbol()
+      print('Gracias por usar nuestros servicios¡¡')
+      return True
+  print('Bienvenido')
+  salida=False
+  while not(salida):
+    print('ingrese la opción que desea realizar :')
+    print('1 -> Ingresar nodo','2 -> Calcular peso del árbol','3 ->Calcular altura del árbol','Otra opción númerica ->Salir',sep='\n')
+    opc=int(input('->'))
+    if opc==1:
+      ele=input('Ingrese el nodo \n-> ')
+      if (arbol.get_height())==0:
+        arbol.add(ele)
+      else:
+        try:
+          padre=input('Ingrese el padre de dicho nodo \n-> ')
+          arbol.add(ele,padre)
+        except ValueError as err:
+          print(err)
+          padre=input('Ingrese el padre de dicho nodo \n-> ')
+          arbol.add(ele,padre)
+      salida=seguir()
+      pass
+    elif opc==2:
+      print(f'El peso del árbol ingresado es : {arbol.get_height()}')
+      salida=seguir()
+    elif opc==3:
+      print(f'La altura del árbol ingresado es : {arbol.get_altura()}')
+      salida=seguir()
+    else:
+      print('El árbol registrado fue : ')
+      print(arbol.root.element)
+      arbol.get_arbol()
