@@ -6,7 +6,7 @@ class Nodo:
   
   def add_children(self,element):
     self.children.append(element)
-    
+      
 class Arbol:
   def __init__(self,root=None) -> None:
     self.root=root
@@ -14,45 +14,45 @@ class Arbol:
     self.altura=0
     self.orden=0
   
-  def search_nodo(self,nodo_actual:Nodo,parent:any)->Nodo:
-    """Este método busca si existe el padre de un nodo
+  def search_Nodo(self,Nodo_actual:Nodo,parent:any)->Nodo:
+    """Este método busca si existe el padre de un Nodo
 
-    :param nodo_actual: nodo al que se quiere agregar al arbol
-    :type nodo_actual: Nodo
-    :param parent: supuesto padre del nodo
+    :param Nodo_actual: Nodo al que se quiere agregar al arbol
+    :type Nodo_actual: Nodo
+    :param parent: supuesto padre del Nodo
     :type parent: any
-    :return: Si encuentra el nodo padre lo returna , de lo contrario retorna None
+    :return: Si encuentra el Nodo padre lo returna , de lo contrario retorna None
     :rtype: Nodo
     """
-    if nodo_actual.element == parent:
-      return nodo_actual
-    for hijo in nodo_actual.children:
-      nodo_encontrado = self.search_nodo(hijo,parent)
-      if nodo_encontrado:
-        return nodo_encontrado
+    if Nodo_actual.element == parent:
+      return Nodo_actual
+    for hijo in Nodo_actual.children:
+      Nodo_encontrado = self.search_Nodo(hijo,parent)
+      if Nodo_encontrado:
+        return Nodo_encontrado
     return None
   
   def add(self,element:any,parent=None) -> None:
-    """Este método agrega nodos al árbol
+    """Este método agrega Nodos al árbol
 
     :param element: elemento a agregar al árbol
     :type element: any
     :param parent: padre del elemento a gregar, defaults to None
     :type parent: any
     """
-    new_nodo=Nodo(element,parent)
+    new_Nodo=Nodo(element,parent)
     if self.peso==0:
-      self.root=new_nodo
+      self.root=new_Nodo
       self.peso+=1
       self.altura+=1
     else:
-      parent_nodo=self.search_nodo(self.root,parent)
-      if parent_nodo is not None:
-        new_nodo.parent=parent_nodo
-        parent_nodo.add_children(new_nodo)
+      parent_Nodo=self.search_Nodo(self.root,parent)
+      if parent_Nodo is not None:
+        new_Nodo.parent=parent_Nodo
+        parent_Nodo.add_children(new_Nodo)
         self.peso+=1
       else:
-        raise 'No se ha encontrado el nodo padre'
+        raise 'No se ha encontrado el Nodo padre'
     
   def get_altura(self)->int:
     """Método que retorna la altura del árbol
@@ -74,35 +74,18 @@ class Arbol:
         altura_max=max(altura_max,altura_hijo)
       return altura_max+1
         
-  def get_height(self)->str:
+  def get_height(self)->int:
     """Retorna el peso del árbol
 
     :return: _description_
     :rtype: str
     """
-    return f'El peso del árbol es {self.peso}'
-      
-  def get_nodos(self,current='xd') -> None:
-    pass
-    # print(f'  {self.root.element}   ')
-    # if len(self.root.children)>0:
-    #   for h1 in self.root.children:
-    #     print(h1.element,end='   ')
-    #     if len(h1.children)>0:
-    #         for h2 in h1.children:
-    #           print(h2.element,end='   ')
+    return self.peso
+  
+  def get_arbol(self)->None:
+    print(self.root.element)
     
-  #   current_nodo=current
-  #   print(current_nodo.element)
-  #   if current_nodo.children:
-  #     for h in current_nodo.children:
-  #       self.get_nodos(h)
       
-  # def get_arbol(self) -> None:
-  #   self.get_nodos(self.root) 
-      
-    
-
 if __name__=='__main__':
   ##some class test
   a=Arbol()
@@ -111,13 +94,14 @@ if __name__=='__main__':
   a.add(30,20)
   a.add(10,20)
   hijo=a.root.children
+  a.add(40,30)
+  print(f'La altura del árbol es : {a.get_altura()}')
+  print(a.get_height())
+  a.add(9,20)
+  a.add(322,20)
+  a.add(44000,40)
   print(f'los hijos de la raiz {a.root.element} del arbol son :')
   for ele in hijo:
     print(ele.element)
-  a.add(40,30)
   print(f'La altura del árbol es : {a.get_altura()}')
-  print(f'el peso del arbol es {a.get_height()}')
-  # a.get_nodos()
-  # a.add(10,20)
-  # a.add(40,20)
-  # a.devolver()
+  print(a.get_height())
