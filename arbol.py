@@ -14,7 +14,16 @@ class Arbol:
     self.altura=0
     self.orden=0
   
-  def search_nodo(self,nodo_actual:Nodo,parent:any):
+  def search_nodo(self,nodo_actual:Nodo,parent:any)->Nodo:
+    """Este método busca si existe el padre de un nodo
+
+    :param nodo_actual: nodo al que se quiere agregar al arbol
+    :type nodo_actual: Nodo
+    :param parent: supuesto padre del nodo
+    :type parent: any
+    :return: Si encuentra el nodo padre lo returna , de lo contrario retorna None
+    :rtype: Nodo
+    """
     if nodo_actual.element == parent:
       return nodo_actual
     for hijo in nodo_actual.children:
@@ -46,6 +55,11 @@ class Arbol:
         raise 'No se ha encontrado el nodo padre'
     
   def get_altura(self)->int:
+    """Método que retorna la altura del árbol
+
+    :return: altura del arbol
+    :rtype: int
+    """
     return self.calcular_altura(self.root)
   
   def calcular_altura(self,current:any)->int:
@@ -60,8 +74,12 @@ class Arbol:
         altura_max=max(altura_max,altura_hijo)
       return altura_max+1
         
-
   def get_height(self)->str:
+    """Retorna el peso del árbol
+
+    :return: _description_
+    :rtype: str
+    """
     return f'El peso del árbol es {self.peso}'
       
   def get_nodos(self,current='xd') -> None:
@@ -98,6 +116,7 @@ if __name__=='__main__':
     print(ele.element)
   a.add(40,30)
   print(f'La altura del árbol es : {a.get_altura()}')
+  print(f'el peso del arbol es {a.get_height()}')
   # a.get_nodos()
   # a.add(10,20)
   # a.add(40,20)
