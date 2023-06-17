@@ -24,10 +24,18 @@ class Arbol:
     return None
   
   def add(self,element:any,parent=None) -> None:
+    """Este método agrega nodos al árbol
+
+    :param element: elemento a agregar al árbol
+    :type element: any
+    :param parent: padre del elemento a gregar, defaults to None
+    :type parent: any
+    """
     new_nodo=Nodo(element,parent)
     if self.peso==0:
       self.root=new_nodo
       self.peso+=1
+      self.altura+=1
     else:
       parent_nodo=self.search_nodo(self.root,parent)
       if parent_nodo is not None:
@@ -36,9 +44,45 @@ class Arbol:
         self.peso+=1
       else:
         raise 'No se ha encontrado el nodo padre'
+    
+  def get_altura(self)->int:
+    return self.calcular_altura(self.root)
+  
+  def calcular_altura(self,current:any)->int:
+    if current is None:
+      return 0
+    elif len(current.children)==0:
+      return 1
+    else:
+      altura_max=0
+      for h in current.children:
+        altura_hijo=self.calcular_altura(h)
+        altura_max=max(altura_max,altura_hijo)
+      return altura_max+1
+        
+
+  def get_height(self)->str:
+    return f'El peso del árbol es {self.peso}'
       
-  def devolver(self) -> None:
-    print(self.root.element)
+  def get_nodos(self,current='xd') -> None:
+    pass
+    # print(f'  {self.root.element}   ')
+    # if len(self.root.children)>0:
+    #   for h1 in self.root.children:
+    #     print(h1.element,end='   ')
+    #     if len(h1.children)>0:
+    #         for h2 in h1.children:
+    #           print(h2.element,end='   ')
+    
+  #   current_nodo=current
+  #   print(current_nodo.element)
+  #   if current_nodo.children:
+  #     for h in current_nodo.children:
+  #       self.get_nodos(h)
+      
+  # def get_arbol(self) -> None:
+  #   self.get_nodos(self.root) 
+      
     
 
 if __name__=='__main__':
@@ -49,9 +93,12 @@ if __name__=='__main__':
   a.add(30,20)
   a.add(10,20)
   hijo=a.root.children
-  print(f'los hijos de la raiz del arbol {a.root.element} son :')
+  print(f'los hijos de la raiz {a.root.element} del arbol son :')
   for ele in hijo:
     print(ele.element)
+  a.add(40,30)
+  print(f'La altura del árbol es : {a.get_altura()}')
+  # a.get_nodos()
   # a.add(10,20)
   # a.add(40,20)
   # a.devolver()
