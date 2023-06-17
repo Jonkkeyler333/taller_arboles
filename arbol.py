@@ -82,10 +82,15 @@ class Arbol:
     """
     return self.peso
   
-  def get_arbol(self)->None:
-    print(self.root.element)
+  def get_arbol(self, nodo_actual=None,nivel=0):
+    if not nodo_actual:
+      nodo_actual = self.root
+    if nivel > 0:
+      print("    " * nivel + str(nodo_actual.element))
+    for hijo in nodo_actual.children:
+      self.get_arbol(hijo,nivel+1)
+  
     
-      
 if __name__=='__main__':
   ##some class test
   a=Arbol()
@@ -93,15 +98,23 @@ if __name__=='__main__':
   print(a.root.element)
   a.add(30,20)
   a.add(10,20)
-  hijo=a.root.children
-  a.add(40,30)
   print(f'La altura del árbol es : {a.get_altura()}')
-  print(a.get_height())
+  print(f'El peso del arbol es :{a.get_height()}')
   a.add(9,20)
   a.add(322,20)
+  a.add(40,30)
   a.add(44000,40)
+  a.add(312,10)
+  a.add(232,9)
+  a.add(69,322)
+  hijo=a.root.children
   print(f'los hijos de la raiz {a.root.element} del arbol son :')
   for ele in hijo:
-    print(ele.element)
+    print(ele.element,end=' ')
   print(f'La altura del árbol es : {a.get_altura()}')
-  print(a.get_height())
+  print(f'El peso del arbol es :{a.get_height()}')
+  print('XDDDDD')
+  print(a.root.element)
+  a.get_arbol(a.root)
+  ##Programa principal
+  
