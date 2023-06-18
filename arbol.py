@@ -89,28 +89,43 @@ class Arbol:
       print("    " * nivel + str(nodo_actual.element))
     for hijo in nodo_actual.children:
       self.get_arbol(hijo,nivel+1)
+      
+    """
+    Recorrido pre-orden : el recorrido inicia en la Raíz y 
+    luego se recorre en pre-orden cada unos de los 
+    sub-árboles de izquierda a derecha
+    """
+    
+  def buscar_preorden(self,element:any,current_nodo=None)->Nodo:
+    if not(current_nodo):
+      current_nodo=self.root
+    if current_nodo.element==element:
+      return current_nodo
+    for hijo in current_nodo.children:
+      return self.buscar_preorden(element,hijo)
   
 if __name__=='__main__':
-  ##some class test
   ##Programa principal
+  import os
   arbol=Arbol()
   def seguir()->bool:
     print('\n Desea realizar otra operación ? \n 1->Si \n 2->No')
     opc=int(input('-> '))
     if opc==1:
       print('\n')
+      os.system('cls')
       return False
     else:
       print('El arbol registrado fue : ')
       print(arbol.root.element)
       arbol.get_arbol()
-      print('Gracias por usar nuestros servicios¡¡')
       return True
+  
   print('Bienvenido')
   salida=False
   while not(salida):
     print('ingrese la opción que desea realizar :')
-    print('1 -> Ingresar nodo','2 -> Calcular peso del árbol','3 ->Calcular altura del árbol','Otra opción númerica ->Salir',sep='\n')
+    print('1 -> Ingresar nodo','2 -> Calcular peso del árbol','3 ->Calcular altura del árbol','4 ->Realizar una busqueda en el árbol','5 ->Ver el árbol actual','Otra opción númerica ->Salir',sep='\n')
     opc=int(input('->'))
     if opc==1:
       ele=input('Ingrese el nodo \n-> ')
@@ -132,7 +147,20 @@ if __name__=='__main__':
     elif opc==3:
       print(f'La altura del árbol ingresado es : {arbol.get_altura()}')
       salida=seguir()
+    elif opc==4:
+      node=input('Ingrese el nodo a buscar -> ')
+      busqueda=arbol.buscar_preorden(node)
+      if not(busqueda):
+        print('No se ha encontrado dicho valor')
+      else:
+        print(busqueda.element)
+      salida=seguir()
+    elif opc==5:
+      print(arbol.root.element)
+      arbol.get_arbol()
+      salida=seguir()
     else:
+      salida=True
       print('El árbol registrado fue : ')
       print(arbol.root.element)
       arbol.get_arbol()
