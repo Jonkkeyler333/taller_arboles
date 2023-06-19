@@ -95,14 +95,16 @@ class Arbol:
     luego se recorre en pre-orden cada unos de los 
     sub-árboles de izquierda a derecha
     """
-    
   def buscar_preorden(self,element:any,current_nodo=None)->Nodo:
     if not(current_nodo):
       current_nodo=self.root
     if current_nodo.element==element:
       return current_nodo
     for hijo in current_nodo.children:
-      return self.buscar_preorden(element,hijo)
+      result=self.buscar_preorden(element,hijo)
+      if result:
+        return result
+    return None
   
 if __name__=='__main__':
   ##Programa principal
@@ -153,7 +155,7 @@ if __name__=='__main__':
       if not(busqueda):
         print('No se ha encontrado dicho valor')
       else:
-        print(busqueda.element)
+        print(f'Se ha encontrado el nodo{busqueda.element} ,cuyo padre es {busqueda.parent.element}')
       salida=seguir()
     elif opc==5:
       print(arbol.root.element)
